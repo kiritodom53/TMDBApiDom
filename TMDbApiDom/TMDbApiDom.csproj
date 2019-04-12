@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>TMDbApiByDom</PackageId>
-    <Authors>dom53</Authors>
+    <Authors>Dominik Mandinec</Authors>
     <Company>dom53</Company>
     <Product>TMDbApiWrapper</Product>
   </PropertyGroup>

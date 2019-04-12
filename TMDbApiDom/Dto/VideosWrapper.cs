@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TMDbApiDom
+{
+    namespace Dto
+    {
+        public class VideosWrapper
+        {
+            public Video[] results { get; set; }
+        }
+    }
+}

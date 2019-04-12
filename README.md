@@ -2,7 +2,7 @@
 
 A library/wrapper of TMDb's API - themoviedb.org 
 Still in alpha! 
-You can also use my java library - http://doc.java.tmdbapi.mandinecdominik.cz
+You can also use my java library http://doc.java.tmdbapi.mandinecdominik.cz
 
  __Required__ Newtonsoft.Json
 

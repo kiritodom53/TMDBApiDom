@@ -30,6 +30,7 @@ namespace TMDbApiDom
         {
             this.apikey = apikey;
         }
+
         // ===================== Discover
         public async Task<ResultObject<DiscoverMovie>> DiscoverMovie(UrlParameters parameters)
         {

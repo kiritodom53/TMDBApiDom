@@ -43,13 +43,13 @@ ResultObject<DiscoverMovie> movieObject = await mdbClient.DiscoverMovie(new UrlP
     {"primary_release_year", "2019" }
 });
 
-Console.WriteLine(movieObject.total_results);		// Get number of total result
-Console.WriteLine(movieObject.total_pages);			// Get number of total pages
-Console.WriteLine(movieObject.page);				// Get page
+Console.WriteLine(movieObject.total_results);       // Get number of total result
+Console.WriteLine(movieObject.total_pages);         // Get number of total pages
+Console.WriteLine(movieObject.page);                // Get page
 
 foreach (var movie_item in movieObject.results)
 {
-	Console.WriteLine("Title: {0}\nVote: {1}", movie_item.title, movie_item.vote_average);
+    Console.WriteLine("Title: {0}\nVote: {1}", movie_item.title, movie_item.vote_average);
 }
 ```
 

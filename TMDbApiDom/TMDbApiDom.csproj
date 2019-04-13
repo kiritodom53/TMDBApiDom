@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,16 +6,24 @@
     <Authors>Dominik Mandinec</Authors>
     <Company>dom53</Company>
     <Product>TMDbApiWrapper</Product>
-    <Version>1.0.2-alpha</Version>
+    <Version>1.0.2.1</Version>
     <PackageProjectUrl>https://github.com/kiritodom53/TMDBApiDom</PackageProjectUrl>
     <Description>Still in alpha
 Library for TMDb Api v3
 https://github.com/kiritodom53/TMDBApiDom</Description>
     <RepositoryUrl>https://github.com/kiritodom53/TMDBApiDom</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

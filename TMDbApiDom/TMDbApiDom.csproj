@@ -8,7 +8,10 @@
     <Product>TMDbApiWrapper</Product>
     <Version>1.0.2-alpha</Version>
     <PackageProjectUrl>https://github.com/kiritodom53/TMDBApiDom</PackageProjectUrl>
-    <Description>Still in alpha</Description>
+    <Description>Still in alpha
+Library for TMDb Api v3
+https://github.com/kiritodom53/TMDBApiDom</Description>
+    <RepositoryUrl>https://github.com/kiritodom53/TMDBApiDom</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

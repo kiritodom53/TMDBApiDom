@@ -92,6 +92,6 @@ List of classes they require ResultObject
 
 ## Plans to the future
 
-- Authentication
+- Authentication (almost done)
 - Account
 - Create all get method

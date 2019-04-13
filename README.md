@@ -54,6 +54,26 @@ foreach (var movie_item in movieObject.results)
 }
 ```
 
+### Authentication
+#### Login
+```c#
+TmdbClient mdbClient = new TmdbClient("your_api_key");
+bool isLogin = await mdbClient.Login("username", "password");
+```
+
+#### Logout
+```c#
+TmdbClient mdbClient = new TmdbClient("your_api_key");
+bool isLogout = await mdbClient.Logout();
+```
+
+#### Movie Rating
+For methods that required authentication you has to be login woth you credentials
+```c#
+TmdbClient mdbClient = new TmdbClient("your_api_key");
+bool movieRated = await mdbClient.RateMovie(movie_id_int, 0);
+```
+
 ## Tips
 - All methods are `async` and awaitable
 - Most methods are very straightforward, and do as they are named (you get info as they are named), `movie`, `person` etc.

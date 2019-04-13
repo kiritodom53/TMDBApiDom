@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TMDbApiDom.Dto.Movies;
 using TMDbApiDom.Dto.SidewayClasses.WrapperClasses;
 using TMDbApiDom.Dto.SidewayClasses.SubClasses;
+using TMDbApiDom.Dto.Authentication;
 
 namespace TMDbApiDomTest
 {
@@ -22,6 +23,18 @@ namespace TMDbApiDomTest
         public void InitializeAsync()
         {
             mdb = new TmdbClient("00bd97eb398972b1934ecaa963822fc8");
+        }
+
+        [TestMethod]
+        public async Task PostMovieRatingTest()
+        {
+            bool isLogin = await mdb.Login("dom53", "D3rT51lK");
+
+            bool movieRated = await mdb.RateMovie(287947, 0);
+
+            Console.WriteLine("isLogin: {0}", isLogin);
+            Console.WriteLine("rated: {0}", movieRated);
+
         }
 
         [TestMethod]

@@ -25,6 +25,8 @@ using TMDbApiDom.Dto.Tvs;
 using TMDbApiDom.Dto.SidewayClasses.WrapperClasses;
 using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 using TMDbApiDom.Dto.Discover;
+using TMDbApiDom.Dto.Authentication;
+using TMDbApiDom.Endpoints.Authentication;
 
 namespace TMDbApiDom
 {
@@ -33,10 +35,119 @@ namespace TMDbApiDom
         private string apikey;
         private HttpClient client = new HttpClient();
         private string baseApiUrl = "https://api.themoviedb.org/3/";
+        private SessionToken sessionToken = null;
 
         public TmdbClient(string apikey)
         {
             this.apikey = apikey;
+        }
+
+        public async Task<RequestToken> CreateRequestToken()
+        {
+            return await this.Get<RequestToken>(new GetCreateRequestTokenEndpoint(), new UrlParameters());
+        }
+
+        public async Task<bool> ValidateCredentials(string username, string password, string request_token)
+        {
+            try
+            {
+                BodyData bodyData = new BodyData()
+            {
+                {"username", username },
+                {"password", password },
+                {"request_token", request_token }
+            };
+                this.sessionToken = await this.Post<SessionToken>(new PostCreateSessionWithLoginEndpoint(), new UrlParameters(), bodyData);
+                return true;
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        public bool IsAuthenticated()
+        {
+
+            return this.sessionToken != null;
+        }
+
+        public async Task<bool> RateMovie(int movie_id, double value)
+        {
+            if (!IsAuthenticated())
+            {
+                return false;
+            }
+
+            try
+            {
+                BodyData bodyData = new BodyData()
+                {
+                    {"value", value.ToString() }
+                };
+
+                await this.Post<ResponseObject>(new MoviesPostRateMovieEndpoint(movie_id), new UrlParameters()
+                {
+                    {"session_id", this.sessionToken.session_id }
+                }, bodyData);
+
+                return true;
+
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        public async Task<SessionToken> CreateSession(string request_token)
+        {
+            BodyData bodyData = new BodyData()
+            {
+                {"request_token", request_token }
+            };
+            return await this.Post<SessionToken>(new PostCreateSessionEndpoint(), new UrlParameters(), bodyData);
+        }
+
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                BodyData bodyData = new BodyData()
+            {
+                {"session_id", this.sessionToken.session_id }
+            };
+                await this.Delete<DeleteSession>(new DeleteSessionEndpoint(), new UrlParameters(), bodyData);
+                return true;
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> Login(string username, string password)
+        {
+            try
+            {
+                RequestToken requestToken = await this.CreateRequestToken();
+
+                bool sessionTokenCreateSuccesfully = await this.ValidateCredentials(username, password, requestToken.request_token);
+                if (sessionTokenCreateSuccesfully)
+                {
+                    this.sessionToken = await this.CreateSession(requestToken.request_token);
+                    return true;
+                }
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+            return false;
         }
 
         // ===================== Discover
@@ -81,8 +192,6 @@ namespace TMDbApiDom
         {
             return await this.Get<ImagesWrapper>(new MoviesGetImagesEndpoint(movie_id), parameters);
         }
-
-        
 
         // ===================== TV
         public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parametrs)
@@ -137,9 +246,9 @@ namespace TMDbApiDom
         /// <param name="endPoint">Endpoint</param>
         /// <param name="parametrs">Parametry</param>
         /// <returns>json in string</returns>
-        private async Task<T> Get<T>(Endpoint endPoint, UrlParameters parametrs)
+        protected async Task<T> Get<T>(Endpoint endPoint, UrlParameters parameters)
         {
-            string url = this.BuildUrl(this.baseApiUrl + endPoint.GetUrl(), parametrs);
+            string url = this.BuildUrl(this.baseApiUrl + endPoint.GetUrl(), parameters);
             //Console.WriteLine("url : {0}", url);
 
             HttpResponseMessage response = await client.GetAsync(url);
@@ -148,7 +257,48 @@ namespace TMDbApiDom
 
             if (!response.IsSuccessStatusCode)
             {
-                ErrorObject err = JsonConvert.DeserializeObject<ErrorObject>(result);
+                ResponseObject err = JsonConvert.DeserializeObject<ResponseObject>(result);
+                throw new ApiException(response.StatusCode, err.status_code, err.status_message);
+            }
+
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        protected async Task<T> Post<T>(Endpoint endPoint, UrlParameters parameters, BodyData bodyData)
+        {
+            string url = this.BuildUrl(this.baseApiUrl + endPoint.GetUrl(), parameters);
+            //Console.WriteLine("url : {0}", url);
+
+            HttpResponseMessage response = await client.PostAsync(url, bodyData.GetStringContent());
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ResponseObject err = JsonConvert.DeserializeObject<ResponseObject>(result);
+                throw new ApiException(response.StatusCode, err.status_code, err.status_message);
+            }
+
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        protected async Task<T> Delete<T>(Endpoint endPoint, UrlParameters parameters, BodyData bodyData)
+        {
+            string url = this.BuildUrl(this.baseApiUrl + endPoint.GetUrl(), parameters);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(url),
+                Content = bodyData.GetStringContent()
+            };
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ResponseObject err = JsonConvert.DeserializeObject<ResponseObject>(result);
                 throw new ApiException(response.StatusCode, err.status_code, err.status_message);
             }
 
@@ -164,16 +314,8 @@ namespace TMDbApiDom
         private string BuildUrl(string url, UrlParameters parameters)
         {
             var builder = new UriBuilder(url);
-
-            string query = "";
             parameters.Add("api_key", this.apikey);
-
-            foreach (KeyValuePair<string, string> item in parameters)
-            {
-                query += item.Key + "=" + item.Value + "&";
-            }
-            query = query.Remove(query.Length - 1); // Odebere poslední &
-            builder.Query = query;
+            builder.Query = Helpers.EncodeDictionary(parameters);
 
             return builder.ToString();
         }

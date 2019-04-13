@@ -6,8 +6,9 @@
     <Authors>Dominik Mandinec</Authors>
     <Company>dom53</Company>
     <Product>TMDbApiWrapper</Product>
-    <Version>1.0.1</Version>
+    <Version>1.0.2-alpha</Version>
     <PackageProjectUrl>https://github.com/kiritodom53/TMDBApiDom</PackageProjectUrl>
+    <Description>Still in alpha</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@ using TMDbApiDom.Dto.SidewayClasses.WrapperClasses;
 namespace TMDbApiDomTest
 {
     [TestClass]
-    public class DsicoverTest
+    public class DiscoverTest
     {
         private TmdbClient mdb;
 

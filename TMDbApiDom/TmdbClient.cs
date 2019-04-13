@@ -17,6 +17,14 @@ using TMDbApiDom.Endpoints.Trending;
 using TMDbApiDom.Endpoints.Configuration;
 using TMDbApiDom.Endpoints.Genres;
 using TMDbApiDom.Endpoints.Tv;
+using TMDbApiDom.Dto.Movies;
+using TMDbApiDom.Dto.People;
+using TMDbApiDom.Dto.Search;
+using TMDbApiDom.Dto.Trending;
+using TMDbApiDom.Dto.Tvs;
+using TMDbApiDom.Dto.SidewayClasses.WrapperClasses;
+using TMDbApiDom.Dto.SidewayClasses.SubClasses;
+using TMDbApiDom.Dto.Discover;
 
 namespace TMDbApiDom
 {
@@ -45,23 +53,36 @@ namespace TMDbApiDom
         // ===================== Movie
         public async Task<Movie> GetMovieDetails(int movie_id, UrlParameters parameters)
         {
-            return await this.Get<Movie>(new MovieDetailsEndpoint(movie_id), parameters);
+            return await this.Get<Movie>(new MoviesGetDetailsEndpoint(movie_id), parameters);
         }
 
-        public async Task<VideosWrapper> GetMovieVideos(int movie_id, UrlParameters parameters)
+        public async Task<ResultObject<UpComing>> GetUpcomingMovies(UrlParameters parameters)
         {
-            return await this.Get<VideosWrapper>(new MovieVideosEndpoint(movie_id), parameters);
+            return await this.Get<ResultObject<UpComing>>(new MoviesGetUpcomingEndpoints(), parameters);
         }
 
-        public async Task<ImagesWrapper> GetMovieImages(int movie_id, UrlParameters parameters)
+        public async Task<ResultObject<TopRated>> GetTopRatedMovies(UrlParameters parameters)
         {
-            return await this.Get<ImagesWrapper>(new MovieImagesEndpoint(movie_id), parameters);
+            return await this.Get<ResultObject<TopRated>>(new MoviesGetTopRatedEndpoint(), parameters);
         }
 
         public async Task<ResultObject<SimilarMovie>> GetSimilarMovie(int movie_id, UrlParameters parameters)
         {
-            return await this.Get<ResultObject<SimilarMovie>>(new MovieSimilarMoviesEndpoint(movie_id), parameters);
+            return await this.Get<ResultObject<SimilarMovie>>(new MoviesGetSimilarMoviesEndpoint(movie_id), parameters);
         }
+
+        //==========
+        public async Task<VideosWrapper> GetMovieVideos(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<VideosWrapper>(new MoviesGetVideosEndpoint(movie_id), parameters);
+        }
+
+        public async Task<ImagesWrapper> GetMovieImages(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<ImagesWrapper>(new MoviesGetImagesEndpoint(movie_id), parameters);
+        }
+
+        
 
         // ===================== TV
         public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parametrs)
@@ -75,7 +96,7 @@ namespace TMDbApiDom
         }
 
         // ===================== Genres
-        public async Task<GenresWrapper> GetGenresMovieList(UrlParameters parameters)
+        public async Task< GenresWrapper> GetGenresMovieList(UrlParameters parameters)
         {
             return await this.Get<GenresWrapper>(new GenresMovieListEndpoint(), parameters);
         }

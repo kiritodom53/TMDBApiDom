@@ -90,6 +90,10 @@ List of classes they require ResultObject
 - `SimilarTv`
 - `TrendingMovie`
 
+## Changelog
+### 1.0.2.1
+- Authentication (login, logout)
+
 ## Plans to the future
 
 - Authentication (almost done)

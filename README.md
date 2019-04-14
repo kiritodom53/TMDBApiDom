@@ -91,6 +91,9 @@ List of classes they require ResultObject
 - `TrendingMovie`
 
 ## Changelog
+### 1.0.2.2
+- Add all endpoints (it does not include methods, methods will be included next update)
+
 ### 1.0.2.1
 - Authentication (login, logout)
 - Methods `Get`, `Post` and `Deleted` are now protected

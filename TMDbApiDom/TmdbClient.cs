@@ -44,7 +44,7 @@ namespace TMDbApiDom
 
         public async Task<RequestToken> CreateRequestToken()
         {
-            return await this.Get<RequestToken>(new GetCreateRequestTokenEndpoint(), new UrlParameters());
+            return await this.Get<RequestToken>(new AuthenticationGetCreateRequestTokenEndpoint(), new UrlParameters());
         }
 
         public async Task<bool> ValidateCredentials(string username, string password, string request_token)
@@ -57,7 +57,7 @@ namespace TMDbApiDom
                 {"password", password },
                 {"request_token", request_token }
             };
-                this.sessionToken = await this.Post<SessionToken>(new PostCreateSessionWithLoginEndpoint(), new UrlParameters(), bodyData);
+                this.sessionToken = await this.Post<SessionToken>(new AuthenticationPostCreateSessionWithLoginEndpoint(), new UrlParameters(), bodyData);
                 return true;
             }
             catch (ApiException ex)
@@ -108,7 +108,7 @@ namespace TMDbApiDom
             {
                 {"request_token", request_token }
             };
-            return await this.Post<SessionToken>(new PostCreateSessionEndpoint(), new UrlParameters(), bodyData);
+            return await this.Post<SessionToken>(new AuthenticationPostCreateSessionEndpoint(), new UrlParameters(), bodyData);
         }
 
         public async Task<bool> Logout()
@@ -119,7 +119,7 @@ namespace TMDbApiDom
             {
                 {"session_id", this.sessionToken.session_id }
             };
-                await this.Delete<DeleteSession>(new DeleteSessionEndpoint(), new UrlParameters(), bodyData);
+                await this.Delete<DeleteSession>(new AuthenticationDeleteSessionEndpoint(), new UrlParameters(), bodyData);
                 return true;
             }
             catch (ApiException ex)
@@ -153,12 +153,12 @@ namespace TMDbApiDom
         // ===================== Discover
         public async Task<ResultObject<DiscoverMovie>> DiscoverMovie(UrlParameters parameters)
         {
-            return await this.Get<ResultObject<DiscoverMovie>>(new DiscoverMovieEndpoint(), parameters);
+            return await this.Get<ResultObject<DiscoverMovie>>(new DiscoverGetMovieDiscoverEndpoint(), parameters);
         }
 
         public async Task<ResultObject<DiscoverTv>> DiscoverTv(UrlParameters parameters)
         {
-            return await this.Get<ResultObject<DiscoverTv>>(new DiscoverTvEndpoint(), parameters);
+            return await this.Get<ResultObject<DiscoverTv>>(new DiscoverGetTvDiscoverEndpoint(), parameters);
         }
 
         // ===================== Movie
@@ -196,48 +196,48 @@ namespace TMDbApiDom
         // ===================== TV
         public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parametrs)
         {
-            return await this.Get<Tv>(new TvDetailsEndpoint(tv_id), parametrs);
+            return await this.Get<Tv>(new TvGetDetailsEndpoint(tv_id), parametrs);
         }
 
         public async Task<ResultObject<SimilarTv>> GetSimilarTv(int tv_id, UrlParameters parameters)
         {
-            return await this.Get<ResultObject<SimilarTv>>(new TvSimilarTvEndpoint(tv_id), parameters);
+            return await this.Get<ResultObject<SimilarTv>>(new TvGetSimilarTvShowsEndpoint(tv_id), parameters);
         }
 
         // ===================== Genres
         public async Task< GenresWrapper> GetGenresMovieList(UrlParameters parameters)
         {
-            return await this.Get<GenresWrapper>(new GenresMovieListEndpoint(), parameters);
+            return await this.Get<GenresWrapper>(new GenresGetMovieListEndpoint(), parameters);
         }
 
         public async Task<GenresWrapper> GetGenresTvList(UrlParameters parameters)
         {
-            return await this.Get<GenresWrapper>(new GenresTvListEndpoint(), parameters);
+            return await this.Get<GenresWrapper>(new GenresGetTvListEndpoint(), parameters);
         }
 
         // ===================== Person
         public async Task<Person> GetPersonDetails(int person_id, UrlParameters parameters)
         {
-            return await this.Get<Person>(new PersonDetailsEndpoint(person_id), parameters);
+            return await this.Get<Person>(new PeopleGetDetailsEndpoint(person_id), parameters);
         }
 
         // ===================== Search
         public async Task<ResultObject<SearchMovie>> SearchMovie(string query, UrlParameters parameters)
         {
             parameters.Add("query", query);
-            return await this.Get<ResultObject<SearchMovie>>(new SearchMoviesEndpoint(), parameters);
+            return await this.Get<ResultObject<SearchMovie>>(new SearchGetSearchMoviesEndpoint(), parameters);
         }
 
         // ===================== Trending
         public async Task<ResultObject<TrendingMovie>> GetTrendingMovies(TimeWindow time, UrlParameters parameters)
         {
-            return await this.Get<ResultObject<TrendingMovie>>(new TrendingEndpoint(MediaType.MOVIE, time), parameters);
+            return await this.Get<ResultObject<TrendingMovie>>(new TrendingGetTrendingEndpoint(MediaType.MOVIE, time), parameters);
         }
 
         // ===================== Configuration
         public async Task<List<ConfigurationLanguage>> GetConfigurationLanguages(UrlParameters parameters)
         {
-            return await this.Get<List<ConfigurationLanguage>>(new ConfigurationLanguagesEndpoint(), parameters);
+            return await this.Get<List<ConfigurationLanguage>>(new ConfigurationGetLanguagesEndpoint(), parameters);
         }
 
         /// <summary>

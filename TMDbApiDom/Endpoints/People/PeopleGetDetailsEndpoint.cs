@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TMDbApiDom.Endpoints.People
 {
-    public class PersonDetailsEndpoint : Endpoint
+    public class PeopleGetDetailsEndpoint : Endpoint
     {
-        public PersonDetailsEndpoint(int id) : base("person", id.ToString())
+        public PeopleGetDetailsEndpoint(int id) : base("person", id.ToString())
         {
 
         }

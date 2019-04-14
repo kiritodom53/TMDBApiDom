@@ -71,7 +71,7 @@ bool isLogout = await mdbClient.Logout();
 For methods that required authentication you has to be login woth you credentials
 ```c#
 TmdbClient mdbClient = new TmdbClient("your_api_key");
-bool movieRated = await mdbClient.RateMovie(movie_id_int, 0);
+bool movieRated = await mdbClient.RateMovie(movie_id_int, movie_rate);
 ```
 
 ## Tips

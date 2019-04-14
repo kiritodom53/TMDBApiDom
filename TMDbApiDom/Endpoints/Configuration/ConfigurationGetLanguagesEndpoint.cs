@@ -6,9 +6,6 @@ namespace TMDbApiDom.Endpoints.Configuration
 {
     public class ConfigurationGetLanguagesEndpoint : Endpoint
     {
-        public ConfigurationGetLanguagesEndpoint() : base("configuration", "languages")
-        {
-
-        }
+        public ConfigurationGetLanguagesEndpoint() : base("configuration", "languages") { }
     }
 }

@@ -6,9 +6,6 @@ namespace TMDbApiDom.Endpoints.Tv
 {
     public class TvGetDetailsEndpoint : Endpoint
     {
-        public TvGetDetailsEndpoint(int id) : base("tv", id.ToString())
-        {
-
-        }
+        public TvGetDetailsEndpoint(int id) : base("tv", id.ToString()) { }
     }
 }

@@ -4,11 +4,8 @@ using System.Text;
 
 namespace TMDbApiDom.Endpoints.Movies
 {
-    public class MoviesGetUpcomingEndpoints : Endpoint
+    public class MoviesGetUpcomingEndpoint : Endpoint
     {
-        public MoviesGetUpcomingEndpoints() : base("movie", "upcoming")
-        {
-
-        }
+        public MoviesGetUpcomingEndpoint() : base("movie", "upcoming") { }
     }
 }

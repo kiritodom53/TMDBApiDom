@@ -6,9 +6,6 @@ namespace TMDbApiDom.Endpoints.Movies
 {
     public class MoviesGetSimilarMoviesEndpoint : Endpoint
     {
-        public MoviesGetSimilarMoviesEndpoint(int movie_id) : base("movie", movie_id.ToString(), "similar")
-        {
-
-        }
+        public MoviesGetSimilarMoviesEndpoint(int movie_id) : base("movie", movie_id.ToString(), "similar") { }
     }
 }

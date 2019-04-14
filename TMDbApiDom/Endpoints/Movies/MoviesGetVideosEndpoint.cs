@@ -6,8 +6,6 @@ namespace TMDbApiDom.Endpoints.Movies
 {
     public class MoviesGetVideosEndpoint : Endpoint
     {
-        public MoviesGetVideosEndpoint(int id) : base("movie", id.ToString(), "videos")
-        {
-        }
+        public MoviesGetVideosEndpoint(int movie_id) : base("movie", movie_id.ToString(), "videos") { }
     }
 }

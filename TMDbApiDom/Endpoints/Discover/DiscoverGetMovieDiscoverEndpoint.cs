@@ -6,9 +6,6 @@ namespace TMDbApiDom.Endpoints.Discover
 {
     public class DiscoverGetMovieDiscoverEndpoint : Endpoint
     {
-        public DiscoverGetMovieDiscoverEndpoint() : base("discover", "movie")
-        {
-
-        }
+        public DiscoverGetMovieDiscoverEndpoint() : base("discover", "movie") { }
     }
 }

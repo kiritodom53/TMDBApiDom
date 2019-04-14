@@ -6,7 +6,7 @@ namespace TMDbApiDom.Endpoints.Movies
 {
     public class MoviesGetDetailsEndpoint : Endpoint
     {
-        public MoviesGetDetailsEndpoint(int id) : base("movie", id.ToString())
+        public MoviesGetDetailsEndpoint(int movie_id) : base("movie", movie_id.ToString())
         {
         }
     }

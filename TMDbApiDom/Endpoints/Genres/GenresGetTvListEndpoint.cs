@@ -6,9 +6,6 @@ namespace TMDbApiDom.Endpoints.Genres
 {
     public class GenresGetTvListEndpoint : Endpoint
     {
-        public GenresGetTvListEndpoint() : base("genre", "tv", "list")
-        {
-
-        }
+        public GenresGetTvListEndpoint() : base("genre", "tv", "list") { }
     }
 }

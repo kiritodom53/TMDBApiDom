@@ -6,10 +6,6 @@ namespace TMDbApiDom.Endpoints.Tv
 {
     public class TvGetSimilarTvShowsEndpoint : Endpoint
     {
-
-        public TvGetSimilarTvShowsEndpoint(int tv_id) : base("tv", tv_id.ToString(), "similar")
-        {
-
-        }
+        public TvGetSimilarTvShowsEndpoint(int tv_id) : base("tv", tv_id.ToString(), "similar") { }
     }
 }

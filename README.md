@@ -93,6 +93,7 @@ List of classes they require ResultObject
 ## Changelog
 ### 1.0.2.1
 - Authentication (login, logout)
+- Methods `Get`, `Post` and `Deleted` are now protected
 
 ## Plans to the future
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbApiDom.Dto.Movies;
+using TMDbApiDom.Dto.Trending;
 
 namespace TMDbApiDom.Dto.SidewayClasses.WrapperClasses
 {
@@ -15,6 +16,11 @@ namespace TMDbApiDom.Dto.SidewayClasses.WrapperClasses
         public int total_pages { get; set; }
 
         public static implicit operator ResultObject<T>(ResultObject<SimilarMovie> v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static implicit operator ResultObject<T>(ResultObject<TrendingMovie> v)
         {
             throw new NotImplementedException();
         }

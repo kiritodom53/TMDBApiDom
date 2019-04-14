@@ -59,6 +59,7 @@
     <Compile Include="TMDbApiAppTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DiscoverTest.cs" />
+    <Compile Include="TrendingTest.cs" />
     <Compile Include="TvTest.cs" />
   </ItemGroup>
   <ItemGroup>

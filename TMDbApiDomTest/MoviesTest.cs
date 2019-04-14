@@ -26,18 +26,6 @@ namespace TMDbApiDomTest
         }
 
         [TestMethod]
-        public async Task PostMovieRatingTest()
-        {
-            bool isLogin = await mdb.Login("dom53", "D3rT51lK");
-
-            bool movieRated = await mdb.RateMovie(287947, 0);
-
-            Console.WriteLine("isLogin: {0}", isLogin);
-            Console.WriteLine("rated: {0}", movieRated);
-
-        }
-
-        [TestMethod]
         public async Task GetMovieDetailTest()
         {
             Movie movie = await mdb.GetMovieDetails(120, new UrlParameters { });
@@ -95,6 +83,18 @@ namespace TMDbApiDomTest
 
             Assert.IsTrue(moviesImages.backdrops != null);
             Assert.IsTrue(moviesImages.posters != null);
+        }
+
+        [TestMethod]
+        public async Task PostMovieRatingTest()
+        {
+            bool isLogin = await mdb.Login("dom53", "D3rT51lK");
+
+            bool movieRated = await mdb.RateMovie(287947, 0);
+
+            Console.WriteLine("isLogin: {0}", isLogin);
+            Console.WriteLine("rated: {0}", movieRated);
+
         }
     }
 }

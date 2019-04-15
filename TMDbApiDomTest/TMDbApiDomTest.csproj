@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationTest.cs" />
+    <Compile Include="FindByIdTest.cs" />
     <Compile Include="MoviesTest.cs" />
     <Compile Include="PeopleTest.cs" />
     <Compile Include="SearchTest.cs" />

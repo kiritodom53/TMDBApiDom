@@ -6,6 +6,6 @@ namespace TMDbApiDom.Endpoints.Find
 {
     public class FindGetFindByID : Endpoint
     {
-        public FindGetFindByID(int external_id) : base("find", external_id.ToString()) { }
+        public FindGetFindByID(string external_id) : base("find", external_id) { }
     }
 }

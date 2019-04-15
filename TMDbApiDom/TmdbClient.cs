@@ -27,6 +27,9 @@ using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 using TMDbApiDom.Dto.Discover;
 using TMDbApiDom.Dto.Authentication;
 using TMDbApiDom.Endpoints.Authentication;
+using TMDbApiDom.Dto.Find;
+using TMDbApiDom.Endpoints.Find;
+using TMDbApiDom.Dto.Movies.SubClasses;
 
 namespace TMDbApiDom
 {
@@ -150,7 +153,29 @@ namespace TMDbApiDom
             return false;
         }
 
+        // ===================== Find by ID
+
+        public async Task<FindResponseObject<FindMovie>> FindMovieById(string external_id, string external_source, UrlParameters parameters)
+        {
+            parameters.Add("external_source", external_source);
+            return await this.Get<FindResponseObject<FindMovie>>(new FindGetFindByID(external_id), parameters);
+        }
+
+        public async Task<FindResponseObject<FindTv>> FindTvById(string external_id, string external_source, UrlParameters parameters)
+        {
+            parameters.Add("external_source", external_source);
+            return await this.Get<FindResponseObject<FindTv>>(new FindGetFindByID(external_id), parameters);
+        }
+
+        public async Task<FindResponseObject<FindTv>> FindPersonById(string external_id, string external_source, UrlParameters parameters)
+        {
+            parameters.Add("external_source", external_source);
+            return await this.Get<FindResponseObject<FindTv>>(new FindGetFindByID(external_id), parameters);
+        }
+
+
         // ===================== Discover
+
         public async Task<ResultObject<DiscoverMovie>> DiscoverMovie(UrlParameters parameters)
         {
             return await this.Get<ResultObject<DiscoverMovie>>(new DiscoverGetMovieDiscoverEndpoint(), parameters);
@@ -169,7 +194,7 @@ namespace TMDbApiDom
 
         public async Task<ResultObject<UpComing>> GetUpcomingMovies(UrlParameters parameters)
         {
-            return await this.Get<ResultObject<UpComing>>(new MoviesGetUpcomingEndpoints(), parameters);
+            return await this.Get<ResultObject<UpComing>>(new MoviesGetUpcomingEndpoint(), parameters);
         }
 
         public async Task<ResultObject<TopRated>> GetTopRatedMovies(UrlParameters parameters)
@@ -180,6 +205,56 @@ namespace TMDbApiDom
         public async Task<ResultObject<SimilarMovie>> GetSimilarMovie(int movie_id, UrlParameters parameters)
         {
             return await this.Get<ResultObject<SimilarMovie>>(new MoviesGetSimilarMoviesEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieKeywords> MovieKeywords(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieKeywords>(new MoviesGetKeywordsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieExternalID> MovieExternalId(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieExternalID>(new MoviesGetExternalIDsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieCredit> MovieCredit(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieCredit>(new MoviesGetCreditsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieChanges> MovieChanges(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieChanges>(new MoviesGetChangesEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieReleaseDates> MovieReleaseDates(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieReleaseDates>(new MoviesGetReleaseDatesEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieAlternativeTitles> MovieAlternativeTitles(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieAlternativeTitles>(new MoviesGetAlternativeTitlesEndpoint(movie_id), parameters);
+        }
+
+        public async Task<MovieTranslation<Translations<MovieTranslationsData>>> MovieTranslation(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<MovieTranslation<Translations<MovieTranslationsData>>>(new MoviesGetTranslationsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<ResultObject<MovieRecommendations>> MovieRecomend(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<ResultObject<MovieRecommendations>>(new MoviesGetRecommendationsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<ResultObject<MovieReview>> MovieReview(int movie_id, UrlParameters parameters)
+        {
+            return await this.Get<ResultObject<MovieReview>>(new MoviesGetReviewsEndpoint(movie_id), parameters);
+        }
+
+        public async Task<ResultObject<MoviePopular>> MoviePopular(UrlParameters parameters)
+        {
+            return await this.Get<ResultObject<MoviePopular>>(new MoviesGetPopularEndpoint(), parameters);
         }
 
         //==========

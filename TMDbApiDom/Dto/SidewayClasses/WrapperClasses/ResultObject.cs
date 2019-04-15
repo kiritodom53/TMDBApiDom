@@ -10,12 +10,13 @@ namespace TMDbApiDom.Dto.SidewayClasses.WrapperClasses
 {
     public class ResultObject<T>
     {
+        public int id { get; set; }
         public int page { get; set; }
         public T[] results { get; set; }
         public int total_results { get; set; }
         public int total_pages { get; set; }
 
-        public static implicit operator ResultObject<T>(ResultObject<SimilarMovie> v)
+        /*public static implicit operator ResultObject<T>(ResultObject<SimilarMovie> v)
         {
             throw new NotImplementedException();
         }
@@ -23,6 +24,6 @@ namespace TMDbApiDom.Dto.SidewayClasses.WrapperClasses
         public static implicit operator ResultObject<T>(ResultObject<TrendingMovie> v)
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }

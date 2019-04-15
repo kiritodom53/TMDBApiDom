@@ -91,8 +91,12 @@ List of classes they require ResultObject
 - `TrendingMovie`
 
 ## Changelog
+
+### 1.0.3.0
+- Add all Movies method except (`GetAccountStates`, `GetLists`, `GetNowPlaying`, `GetLatest`)
+
 ### 1.0.2.2
-- Add all endpoints (it does not include methods, methods will be included next update)
+- Add all endpoints (it does not include methods, methods will be added individually next updates)
 
 ### 1.0.2.1
 - Authentication (login, logout)

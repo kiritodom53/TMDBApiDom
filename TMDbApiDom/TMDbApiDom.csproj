@@ -6,7 +6,7 @@
     <Authors>Dominik Mandinec</Authors>
     <Company>dom53</Company>
     <Product>TMDbApiWrapper</Product>
-    <Version>1.0.2.1</Version>
+    <Version>1.0.3.0</Version>
     <PackageProjectUrl>https://github.com/kiritodom53/TMDBApiDom</PackageProjectUrl>
     <Description>Still in alpha
 Library for TMDb Api v3

@@ -2,7 +2,6 @@
 
 A library/wrapper of TMDb's API - themoviedb.org 
 Still in alpha! 
-You can also use my java library http://doc.java.tmdbapi.mandinecdominik.cz
 
 GitHub repository is updated earlier and regularly than NuGet
 

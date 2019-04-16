@@ -107,7 +107,7 @@ List of classes they require ResultObject
 - Add all endpoints (it does not include methods, methods will be added individually next updates)
 
 ### 1.0.2.1
-- Authentication (login, logout)
+- Authentication (`login`, `logout`)
 - Methods `Get`, `Post` and `Deleted` are now protected
 
 ## Plans to the future

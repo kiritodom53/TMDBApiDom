@@ -4,6 +4,8 @@ A library/wrapper of TMDb's API - themoviedb.org
 Still in alpha! 
 You can also use my java library http://doc.java.tmdbapi.mandinecdominik.cz
 
+GitHub repository is updated earlier and regularly than NuGet
+
  __Required__ Newtonsoft.Json
 
 ## Warning
@@ -92,6 +94,13 @@ List of classes they require ResultObject
 
 ## Changelog
 
+### Next update
+ - Add almost all Tv methods
+ - Add almost all Search methods
+ - Little edit in folder structure and some methods (not so important)
+ - Add `DeleteTvRating` and `DeleteMovieRating` methods
+ - Methods `Get`, `Post` and `Deleted` are now available for override
+
 ### 1.0.3.0
 - Add all Movies method except (`GetAccountStates`, `GetLists`, `GetNowPlaying`, `GetLatest`)
 
@@ -104,6 +113,8 @@ List of classes they require ResultObject
 
 ## Plans to the future
 
-- Authentication (almost done)
-- Account
+- Authentication (in progress)
+- Account methods
 - Create all get method
+- Create list of available methods
+- Create better documentation

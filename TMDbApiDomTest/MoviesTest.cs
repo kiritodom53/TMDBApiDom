@@ -9,6 +9,7 @@ using TMDbApiDom.Dto.SidewayClasses.WrapperClasses;
 using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 using TMDbApiDom.Dto.Authentication;
 using TMDbApiDom.Dto.Movies.SubClasses;
+using TMDbApiDom.Dto.Tvs;
 
 namespace TMDbApiDomTest
 {
@@ -91,10 +92,13 @@ namespace TMDbApiDomTest
         {
             bool isLogin = await mdb.Login("dom53", "D3rT51lK");
 
-            bool movieRated = await mdb.RateMovie(287947, 0);
+            bool movieRated = await mdb.Rate("tv", 63926, 5);
 
             Console.WriteLine("isLogin: {0}", isLogin);
             Console.WriteLine("rated: {0}", movieRated);
+
+			Assert.IsTrue(isLogin);
+			Assert.IsTrue(movieRated);
         }
 
         [TestMethod]
@@ -126,8 +130,9 @@ namespace TMDbApiDomTest
         {
             MovieCredit moviesCredits = await mdb.MovieCredit(299537, new UrlParameters { });
 
-            Console.WriteLine("id: {0}", moviesCredits.id);
-            Console.WriteLine("cast name [0]: {0}", moviesCredits.cast[0].name);
+			Console.WriteLine("id: {0}", moviesCredits.id);
+			Console.WriteLine("id: {0}", moviesCredits.cast[0].cast_id);
+			Console.WriteLine("cast name [0]: {0}", moviesCredits.cast[0].name);
             Console.WriteLine("crew name [0]: {0}", moviesCredits.crew[0].name);
 
             Assert.IsTrue(moviesCredits != null);
@@ -136,7 +141,7 @@ namespace TMDbApiDomTest
         [TestMethod]
         public async Task MovieChangesTest()
         {
-            MovieChanges movieChanges = await mdb.MovieChanges(120, new UrlParameters { });
+            MovieChanges<Changes<MovieItems>> movieChanges = await mdb.MovieChanges(120, new UrlParameters { });
 
             Console.WriteLine("movieChanges length: {0}", movieChanges.changes.Length);
             /*Console.WriteLine("movieChanges key: {0}", movieChanges.changes[0].key);
@@ -181,13 +186,13 @@ namespace TMDbApiDomTest
         [TestMethod]
         public async Task MoiveTranslationsTest()
         {
-            MovieTranslation<Translations<MovieTranslationsData>> movieTranslation = await mdb.MovieTranslation(120, new UrlParameters { });
+            Translations<TranslationObject<MovieTranslation>> movieTranslation = await mdb.MovieTranslation(120, new UrlParameters { });
 
             Console.WriteLine("movieTranslation id : {0}", movieTranslation.id);
             Console.WriteLine("movieTranslation length: {0}", movieTranslation.translations.Length);
             Console.WriteLine("movieTranslation data Title: {0}", movieTranslation.translations[0].data.title);
             Console.WriteLine("movieTranslation data Homepage: {0}", movieTranslation.translations[0].data.homepage);
-            Console.WriteLine("movieTranslation data Overwiev: {0}", movieTranslation.translations[0].data.overwiev);
+            Console.WriteLine("movieTranslation data Overwiev: {0}", movieTranslation.translations[0].data.overview);
 
             Assert.IsTrue(movieTranslation != null);
         }
@@ -234,5 +239,28 @@ namespace TMDbApiDomTest
             Assert.IsTrue(moviePopular != null);
         }
 
-    }
+		[TestMethod]
+		public async Task MovieVideoWrapperTest()
+		{
+			VideosWrapper movieVideo = await mdb.GetMovieVideos(120, new UrlParameters { });
+
+			Console.WriteLine("video length : {0}", movieVideo.results.Length);
+			Console.WriteLine("video name : {0}", movieVideo.results[0].name);
+
+			Assert.IsTrue(movieVideo != null);
+		}
+
+		[TestMethod]
+		public async Task MovieImgWrapperTest()
+		{
+			ImagesWrapper movieImg = await mdb.GetMovieImages(120, new UrlParameters { });
+
+			Console.WriteLine("imgmovieImgVideo backdrop length : {0}", movieImg.backdrops.Length);
+			Console.WriteLine("movieImg backdrop file_path : {0}", movieImg.backdrops[0].file_path);
+			Console.WriteLine("movieImg posters length : {0}", movieImg.posters.Length);
+			Console.WriteLine("movieImg posters file_path : {0}", movieImg.posters[0].file_path);
+
+			Assert.IsTrue(movieImg != null);
+		}
+	}
 }

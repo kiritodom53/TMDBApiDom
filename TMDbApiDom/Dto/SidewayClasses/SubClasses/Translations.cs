@@ -7,7 +7,7 @@ namespace TMDbApiDom.Dto.SidewayClasses.SubClasses
 {
     public class Translations<T>
     {
-        
-        public T data { get; set; }
+        public int id { get; set; }
+        public T[] translations { get; set; }
     }
 }

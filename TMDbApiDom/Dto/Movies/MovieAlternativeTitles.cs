@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 
-namespace TMDbApiDom.Dto.Movies.SubClasses
+namespace TMDbApiDom.Dto.Movies
 {
     public class MovieAlternativeTitles
     {

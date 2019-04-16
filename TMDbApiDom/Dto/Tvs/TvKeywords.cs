@@ -4,10 +4,11 @@ using System.Text;
 using TMDbApiDom.Dto.Movies.SubClasses;
 using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 
-namespace TMDbApiDom.Dto.Movies
+namespace TMDbApiDom.Dto.Tvs
 {
-    public class MovieChanges<T>
-    {
-        public T[] changes { get; set; }
-    }
+	public class TvKeywords
+	{
+		public int id { get; set; }
+		public Keywords[] results { get; set; }
+	}
 }

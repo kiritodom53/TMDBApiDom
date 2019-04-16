@@ -30,6 +30,7 @@ using TMDbApiDom.Endpoints.Authentication;
 using TMDbApiDom.Dto.Find;
 using TMDbApiDom.Endpoints.Find;
 using TMDbApiDom.Dto.Movies.SubClasses;
+using TMDbApiDom.Dto.Tvs.SubClasses;
 
 namespace TMDbApiDom
 {
@@ -76,7 +77,7 @@ namespace TMDbApiDom
             return this.sessionToken != null;
         }
 
-        public async Task<bool> RateMovie(int movie_id, double value)
+        public async Task<bool> Rate(string type, int id, double value)
         {
             if (!IsAuthenticated())
             {
@@ -90,12 +91,26 @@ namespace TMDbApiDom
                     {"value", value.ToString() }
                 };
 
-                await this.Post<ResponseObject>(new MoviesPostRateMovieEndpoint(movie_id), new UrlParameters()
-                {
-                    {"session_id", this.sessionToken.session_id }
-                }, bodyData);
+				if (type == "movie")
+				{
+					await this.Post<ResponseObject>(new MoviesPostRateMovieEndpoint(id), new UrlParameters()
+					{
+						{"session_id", this.sessionToken.session_id }
+					}, bodyData);
+				}else if (type == "tv")
+				{
+					await this.Post<ResponseObject>(new TvPostRateTvShowsEndpoint(id), new UrlParameters()
+					{
+						{"session_id", this.sessionToken.session_id }
+					}, bodyData);
+				}
+				else
+				{
+					return false;
+				}
 
-                return true;
+
+				return true;
 
             }
             catch (ApiException ex)
@@ -222,12 +237,17 @@ namespace TMDbApiDom
             return await this.Get<MovieCredit>(new MoviesGetCreditsEndpoint(movie_id), parameters);
         }
 
-        public async Task<MovieChanges> MovieChanges(int movie_id, UrlParameters parameters)
-        {
-            return await this.Get<MovieChanges>(new MoviesGetChangesEndpoint(movie_id), parameters);
-        }
+		//public async Task<MovieChanges> MovieChanges(int movie_id, UrlParameters parameters)
+		//{
+		//    return await this.Get<MovieChanges>(new MoviesGetChangesEndpoint(movie_id), parameters);
+		//}
 
-        public async Task<MovieReleaseDates> MovieReleaseDates(int movie_id, UrlParameters parameters)
+		public async Task<MovieChanges<Changes<MovieItems>>> MovieChanges(int movie_id, UrlParameters parameters)
+		{
+			return await this.Get<MovieChanges<Changes<MovieItems>>>(new MoviesGetChangesEndpoint(movie_id), parameters);
+		}
+
+		public async Task<MovieReleaseDates> MovieReleaseDates(int movie_id, UrlParameters parameters)
         {
             return await this.Get<MovieReleaseDates>(new MoviesGetReleaseDatesEndpoint(movie_id), parameters);
         }
@@ -237,12 +257,17 @@ namespace TMDbApiDom
             return await this.Get<MovieAlternativeTitles>(new MoviesGetAlternativeTitlesEndpoint(movie_id), parameters);
         }
 
-        public async Task<MovieTranslation<Translations<MovieTranslationsData>>> MovieTranslation(int movie_id, UrlParameters parameters)
-        {
-            return await this.Get<MovieTranslation<Translations<MovieTranslationsData>>>(new MoviesGetTranslationsEndpoint(movie_id), parameters);
-        }
+		//public async Task<MovieTranslation<Translations<MovieTranslationsData>>> MovieTranslation(int movie_id, UrlParameters parameters)
+		//{
+		//	return await this.Get<MovieTranslation<Translations<MovieTranslationsData>>>(new MoviesGetTranslationsEndpoint(movie_id), parameters);
+		//}
 
-        public async Task<ResultObject<MovieRecommendations>> MovieRecomend(int movie_id, UrlParameters parameters)
+		public async Task<Translations<TranslationObject<MovieTranslation>>> MovieTranslation(int movie_id, UrlParameters parameters)
+		{
+			return await this.Get<Translations<TranslationObject<MovieTranslation>>>(new MoviesGetTranslationsEndpoint(movie_id), parameters);
+		}
+
+		public async Task<ResultObject<MovieRecommendations>> MovieRecomend(int movie_id, UrlParameters parameters)
         {
             return await this.Get<ResultObject<MovieRecommendations>>(new MoviesGetRecommendationsEndpoint(movie_id), parameters);
         }
@@ -268,8 +293,9 @@ namespace TMDbApiDom
             return await this.Get<ImagesWrapper>(new MoviesGetImagesEndpoint(movie_id), parameters);
         }
 
-        // ===================== TV
-        public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parametrs)
+		// ===================== TV
+
+		/*public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parametrs)
         {
             return await this.Get<Tv>(new TvGetDetailsEndpoint(tv_id), parametrs);
         }
@@ -277,10 +303,88 @@ namespace TMDbApiDom
         public async Task<ResultObject<SimilarTv>> GetSimilarTv(int tv_id, UrlParameters parameters)
         {
             return await this.Get<ResultObject<SimilarTv>>(new TvGetSimilarTvShowsEndpoint(tv_id), parameters);
-        }
+        }*/
 
-        // ===================== Genres
-        public async Task< GenresWrapper> GetGenresMovieList(UrlParameters parameters)
+		//=============================================================================================================
+		//=============================================================================================================
+
+		public async Task<Tv> GetTvDetails(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<Tv>(new TvGetDetailsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<ResultObject<TvTopRated>> GetTopRatedTvShows(UrlParameters parameters)
+		{
+			return await this.Get<ResultObject<TvTopRated>>(new TvGetTopRatedEndpoint(), parameters);
+		}
+
+		public async Task<ResultObject<SimilarTv>> GetSimilarTv(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<ResultObject<SimilarTv>>(new TvGetSimilarTvShowsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<TvKeywords> TvKeywords(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<TvKeywords>(new TvGetKeywordsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<TvExternalID> TvExternalId(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<TvExternalID>(new TvGetExternalIDsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<TvCredit> TvCredit(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<TvCredit>(new TvGetCreditsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<TvChanges<Changes<TvItems>>> TvChanges(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<TvChanges<Changes<TvItems>>>(new TvGetChangesEndpoint(tv_id), parameters);
+		}
+
+		public async Task<TvAlternativeTitles> TvAlternativeTitles(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<TvAlternativeTitles>(new TvGetAlternativeTitles(tv_id), parameters);
+		}
+
+		public async Task<Translations<TranslationObject<TvTranslations>>> TvTranslation(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<Translations<TranslationObject<TvTranslations>>>(new TvGetTranslationsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<ResultObject<TvRecommendations>> TvRecomend(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<ResultObject<TvRecommendations>>(new TvGetRecommendationsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<ResultObject<TvReview>> TvReview(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<ResultObject<TvReview>>(new TvGetReviewsEndpoint(tv_id), parameters);
+		}
+
+		public async Task<ResultObject<TvPopular>> TvPopular(UrlParameters parameters)
+		{
+			return await this.Get<ResultObject<TvPopular>>(new TvGetPopularEndpoint(), parameters);
+		}
+
+		//==========
+		public async Task<VideosWrapper> GetTvVideos(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<VideosWrapper>(new TvGetVideosEndpoint(tv_id), parameters);
+		}
+
+		public async Task<ImagesWrapper> GetTvImages(int tv_id, UrlParameters parameters)
+		{
+			return await this.Get<ImagesWrapper>(new TvGetImagesEndpoint(tv_id), parameters);
+		}
+
+		//=============================================================================================================
+		//=============================================================================================================
+
+
+		// ===================== Genres
+		public async Task< GenresWrapper> GetGenresMovieList(UrlParameters parameters)
         {
             return await this.Get<GenresWrapper>(new GenresGetMovieListEndpoint(), parameters);
         }

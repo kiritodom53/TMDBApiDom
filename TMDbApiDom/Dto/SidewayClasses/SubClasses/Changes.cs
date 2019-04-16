@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TMDbApiDom.Dto.Movies.SubClasses
+namespace TMDbApiDom.Dto.SidewayClasses.SubClasses
 { 
-    public class Changes
+    public class Changes<T>
     {
         public string key { get; set; }
-        public Items[] items { get; set; }
+        public T[] items { get; set; }
     }
 }

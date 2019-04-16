@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TMDbApiDom.Dto.Movies.SubClasses
+namespace TMDbApiDom.Dto.SidewayClasses.SubClasses
 {
     public class Keywords
     {

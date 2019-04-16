@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TMDbApiDom.Dto.SidewayClasses.SubClasses;
 
-namespace TMDbApiDom.Dto.Movies
+namespace TMDbApiDom.Dto.Tvs
 {
-    public class MovieTranslation
-    {
-		public string title { get; set; }
+	public class TvTranslations
+	{
+		public string name { get; set; }
 		public string overview { get; set; }
 		public string homepage { get; set; }
 	}
